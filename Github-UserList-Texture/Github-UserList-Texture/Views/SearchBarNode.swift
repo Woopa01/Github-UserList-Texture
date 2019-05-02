@@ -6,7 +6,6 @@
 //  Copyright © 2019 조우진. All rights reserved.
 //
 
-import UIKit
 import AsyncDisplayKit
 
 class SearchBarNode: ASDisplayNode {

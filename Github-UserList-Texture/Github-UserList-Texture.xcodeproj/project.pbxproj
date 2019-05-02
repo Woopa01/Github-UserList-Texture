@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		41E72CAA6D819E51E9A5D17C /* Pods_Github_UserList_TextureUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 242392D528F7896EE33C019E /* Pods_Github_UserList_TextureUITests.framework */; };
 		683B9F82227A6D7500DD81AE /* SearchBarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683B9F81227A6D7500DD81AE /* SearchBarNode.swift */; };
+		683B9F88227A8BA900DD81AE /* UserListCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683B9F87227A8BA900DD81AE /* UserListCellNode.swift */; };
 		683D1E5F2279E40A0079CCC4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683D1E5E2279E40A0079CCC4 /* AppDelegate.swift */; };
 		683D1E612279E40A0079CCC4 /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683D1E602279E40A0079CCC4 /* UserListViewController.swift */; };
 		683D1E672279E40A0079CCC4 /* Github_UserList_Texture.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 683D1E652279E40A0079CCC4 /* Github_UserList_Texture.xcdatamodeld */; };
@@ -44,6 +45,7 @@
 		52E4B7D441D60F5B03A32D29 /* Pods-Github-UserList-Texture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Github-UserList-Texture.release.xcconfig"; path = "Pods/Target Support Files/Pods-Github-UserList-Texture/Pods-Github-UserList-Texture.release.xcconfig"; sourceTree = "<group>"; };
 		58B2E1C6FAE022B5FFC81221 /* Pods-Github-UserList-Texture.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Github-UserList-Texture.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Github-UserList-Texture/Pods-Github-UserList-Texture.debug.xcconfig"; sourceTree = "<group>"; };
 		683B9F81227A6D7500DD81AE /* SearchBarNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarNode.swift; sourceTree = "<group>"; };
+		683B9F87227A8BA900DD81AE /* UserListCellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCellNode.swift; sourceTree = "<group>"; };
 		683D1E5B2279E40A0079CCC4 /* Github-UserList-Texture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Github-UserList-Texture.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		683D1E5E2279E40A0079CCC4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		683D1E602279E40A0079CCC4 /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				683B9F81227A6D7500DD81AE /* SearchBarNode.swift */,
+				683B9F87227A8BA900DD81AE /* UserListCellNode.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 				683D1E612279E40A0079CCC4 /* UserListViewController.swift in Sources */,
 				683D1E672279E40A0079CCC4 /* Github_UserList_Texture.xcdatamodeld in Sources */,
 				683D1E5F2279E40A0079CCC4 /* AppDelegate.swift in Sources */,
+				683B9F88227A8BA900DD81AE /* UserListCellNode.swift in Sources */,
 				683B9F82227A6D7500DD81AE /* SearchBarNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

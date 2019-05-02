@@ -32,6 +32,8 @@ class UserListViewController: ASViewController<ASTableNode> {
         }
         self.node.leadingScreensForBatching = 2.0
         self.node.allowsSelectionDuringEditing = true
+        
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,4 +41,5 @@ class UserListViewController: ASViewController<ASTableNode> {
     }
     
 }
+
 
