@@ -20,12 +20,15 @@ class UserListCellNode : ASCellNode {
     
     lazy var usernameNode: ASTextNode = {
         let node = ASTextNode()
+        node.style.flexShrink = 1.0
         node.maximumNumberOfLines = 1
         return node
     }()
     
     lazy var scoreNode: ASTextNode = {
         let node = ASTextNode()
+        node.isLayerBacked = true
+        node.style.flexShrink = 1.0
         node.maximumNumberOfLines = 1
         return node
     }()
