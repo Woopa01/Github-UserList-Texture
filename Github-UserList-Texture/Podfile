@@ -9,7 +9,7 @@ target 'Github-UserList-Texture' do
 	pod 'RxSwift'
 	pod 'RxCocoa'
 	pod 'RxAlamofire'
-	pod 'Kingfisher'
+	pod 'RxCocoa-Texture'
 
 
 
