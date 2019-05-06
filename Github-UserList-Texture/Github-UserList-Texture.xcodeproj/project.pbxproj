@@ -10,6 +10,13 @@
 		41E72CAA6D819E51E9A5D17C /* Pods_Github_UserList_TextureUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 242392D528F7896EE33C019E /* Pods_Github_UserList_TextureUITests.framework */; };
 		683B9F82227A6D7500DD81AE /* SearchBarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683B9F81227A6D7500DD81AE /* SearchBarNode.swift */; };
 		683B9F88227A8BA900DD81AE /* UserListCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683B9F87227A8BA900DD81AE /* UserListCellNode.swift */; };
+		683B9F8B227A9D8800DD81AE /* UserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683B9F8A227A9D8800DD81AE /* UserListViewModel.swift */; };
+		683B9F8D227A9D9200DD81AE /* Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683B9F8C227A9D9200DD81AE /* Base.swift */; };
+		683B9F90227AB3BE00DD81AE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683B9F8F227AB3BE00DD81AE /* UserModel.swift */; };
+		683B9F92227AC34F00DD81AE /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683B9F91227AC34F00DD81AE /* Client.swift */; };
+		683B9F94227AC57600DD81AE /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683B9F93227AC57600DD81AE /* Api.swift */; };
+		683B9F96227ACE3400DD81AE /* ApiResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683B9F95227ACE3400DD81AE /* ApiResponses.swift */; };
+		683CD600227BD467009D1464 /* UserListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683CD5FF227BD467009D1464 /* UserListCellViewModel.swift */; };
 		683D1E5F2279E40A0079CCC4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683D1E5E2279E40A0079CCC4 /* AppDelegate.swift */; };
 		683D1E612279E40A0079CCC4 /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683D1E602279E40A0079CCC4 /* UserListViewController.swift */; };
 		683D1E672279E40A0079CCC4 /* Github_UserList_Texture.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 683D1E652279E40A0079CCC4 /* Github_UserList_Texture.xcdatamodeld */; };
@@ -46,6 +53,13 @@
 		58B2E1C6FAE022B5FFC81221 /* Pods-Github-UserList-Texture.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Github-UserList-Texture.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Github-UserList-Texture/Pods-Github-UserList-Texture.debug.xcconfig"; sourceTree = "<group>"; };
 		683B9F81227A6D7500DD81AE /* SearchBarNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarNode.swift; sourceTree = "<group>"; };
 		683B9F87227A8BA900DD81AE /* UserListCellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCellNode.swift; sourceTree = "<group>"; };
+		683B9F8A227A9D8800DD81AE /* UserListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewModel.swift; sourceTree = "<group>"; };
+		683B9F8C227A9D9200DD81AE /* Base.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base.swift; sourceTree = "<group>"; };
+		683B9F8F227AB3BE00DD81AE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		683B9F91227AC34F00DD81AE /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
+		683B9F93227AC57600DD81AE /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
+		683B9F95227ACE3400DD81AE /* ApiResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponses.swift; sourceTree = "<group>"; };
+		683CD5FF227BD467009D1464 /* UserListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCellViewModel.swift; sourceTree = "<group>"; };
 		683D1E5B2279E40A0079CCC4 /* Github-UserList-Texture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Github-UserList-Texture.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		683D1E5E2279E40A0079CCC4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		683D1E602279E40A0079CCC4 /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
@@ -101,6 +115,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		683B9F89227A9D7000DD81AE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				683B9F8A227A9D8800DD81AE /* UserListViewModel.swift */,
+				683CD5FF227BD467009D1464 /* UserListCellViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		683B9F8E227AB3AC00DD81AE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				683B9F8F227AB3BE00DD81AE /* UserModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		683D1E522279E40A0079CCC4 = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +157,8 @@
 		683D1E5D2279E40A0079CCC4 /* Github-UserList-Texture */ = {
 			isa = PBXGroup;
 			children = (
+				683B9F8E227AB3AC00DD81AE /* Model */,
+				683B9F89227A9D7000DD81AE /* ViewModel */,
 				683D1E922279E5830079CCC4 /* Util */,
 				683D1E912279E5790079CCC4 /* Network */,
 				683D1E902279E5580079CCC4 /* Views */,
@@ -176,6 +209,9 @@
 		683D1E912279E5790079CCC4 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				683B9F91227AC34F00DD81AE /* Client.swift */,
+				683B9F93227AC57600DD81AE /* Api.swift */,
+				683B9F95227ACE3400DD81AE /* ApiResponses.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -183,6 +219,7 @@
 		683D1E922279E5830079CCC4 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				683B9F8C227A9D9200DD81AE /* Base.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -361,12 +398,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Github-UserList-Texture/Pods-Github-UserList-Texture-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
 				"${BUILT_PRODUCTS_DIR}/PINOperation/PINOperation.framework",
 				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa-Texture/RxCocoa_Texture.framework",
+				"${BUILT_PRODUCTS_DIR}/RxOptional/RxOptional.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Texture/AsyncDisplayKit.framework",
 			);
@@ -375,12 +413,13 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINOperation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa_Texture.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxOptional.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AsyncDisplayKit.framework",
 			);
@@ -441,10 +480,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				683D1E612279E40A0079CCC4 /* UserListViewController.swift in Sources */,
+				683CD600227BD467009D1464 /* UserListCellViewModel.swift in Sources */,
+				683B9F8B227A9D8800DD81AE /* UserListViewModel.swift in Sources */,
+				683B9F96227ACE3400DD81AE /* ApiResponses.swift in Sources */,
+				683B9F90227AB3BE00DD81AE /* UserModel.swift in Sources */,
 				683D1E672279E40A0079CCC4 /* Github_UserList_Texture.xcdatamodeld in Sources */,
 				683D1E5F2279E40A0079CCC4 /* AppDelegate.swift in Sources */,
 				683B9F88227A8BA900DD81AE /* UserListCellNode.swift in Sources */,
+				683B9F8D227A9D9200DD81AE /* Base.swift in Sources */,
 				683B9F82227A6D7500DD81AE /* SearchBarNode.swift in Sources */,
+				683B9F94227AC57600DD81AE /* Api.swift in Sources */,
+				683B9F92227AC34F00DD81AE /* Client.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
