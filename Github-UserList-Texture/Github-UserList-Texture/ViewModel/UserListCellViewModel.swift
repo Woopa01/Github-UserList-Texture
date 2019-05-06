@@ -11,20 +11,18 @@ import RxSwift
 import RxCocoa
 
 class UserListCellViewModel{
-    
     //Output
-    let userProfileURL: Driver<URL?>
-    let userName: Driver<String?>
-    let score: Driver<String?>
+    let userProfileURL: Observable<URL?>
+    let userName: Observable<String?>
+    let score: Observable<String?>
     
     init(userModel: UserModel) {
         self.userProfileURL = Observable.just(userModel.userProfileURL)
-            .asDriver(onErrorJustReturn: URL(string: ""))
         
         self.userName = Observable.just(userModel.userName)
-            .asDriver(onErrorJustReturn: "")
         
         self.score = Observable.just(String(userModel.score))
-            .asDriver(onErrorJustReturn: "")
+        
+        print("fdsa\(self.userProfileURL)")
     }
 }

@@ -9,29 +9,31 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import RxOptional
 
 class UserListViewModel {
     //Input
     let searchString = BehaviorRelay<String>(value: "")
     
     //Output
-    let userList: Driver<[UserModel]>
+    let userList = BehaviorRelay<[UserModel]>(value: [])
    
-    
+    let disposeBag = DisposeBag()
+
     struct Dependencies {
         let api: Api
     }
     
     private let dependencies = Dependencies(api: Api())
     
-    init(userModel : UserModel) {
-        self.userList = searchString.asObservable()
-            .flatMap({ (String) in
-                self.dependencies.api.searchRequest()
-            })
-            .map({ items -> [UserModel] in
-                return items
-            })
-            .asDriver(onErrorJustReturn: [])
+    init() {
+        searchString.asObservable()
+        .filterEmpty()
+        .distinctUntilChanged()
+        .flatMap {
+                self.dependencies.api.searchRequest(searchString: $0)
+        }
+        .bind(to: userList)
+        .disposed(by: disposeBag)
     }
 }
