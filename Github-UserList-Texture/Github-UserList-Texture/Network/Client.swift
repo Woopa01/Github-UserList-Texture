@@ -12,12 +12,12 @@ import Alamofire
 import RxAlamofire
 
 protocol ClientType {
-    func get(url: String, params: Parameters) -> Observable<(HTTPURLResponse,Data)>
+    func get(url: String, params: Parameters?) -> Observable<(HTTPURLResponse,Data)>
 }
 
 class Client: ClientType {
 
-    func get(url: String, params: Parameters) -> Observable<(HTTPURLResponse,Data)> {
+    func get(url: String, params: Parameters?) -> Observable<(HTTPURLResponse,Data)> {
         return requestData(.get,
                            url,
                            parameters: params,
