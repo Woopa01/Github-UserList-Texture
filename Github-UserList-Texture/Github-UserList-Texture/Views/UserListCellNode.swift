@@ -7,8 +7,12 @@
 //
 
 import AsyncDisplayKit
+import RxSwift
+import RxCocoa_Texture
 
 class UserListCellNode : ASCellNode {
+    let disposeBag = DisposeBag()
+    
     lazy var userprofileNode: ASNetworkImageNode = {
         let node = ASNetworkImageNode()
         node.style.preferredSize = CGSize(width: 50, height: 50)
@@ -27,17 +31,34 @@ class UserListCellNode : ASCellNode {
     
     lazy var scoreNode: ASTextNode = {
         let node = ASTextNode()
+        node.truncationAttributedText = NSAttributedString(string: "score: ", attributes: self.scoreNodeAttribute)
         node.isLayerBacked = true
         node.style.flexShrink = 1.0
         node.maximumNumberOfLines = 1
         return node
     }()
     
-    override init() {
+    init(viewModel: UserListCellViewModel) {
         super.init()
         self.selectionStyle = .none
         self.backgroundColor = .white
         self.automaticallyManagesSubnodes = true
+        
+        viewModel.userProfileURL
+            .bind(to: userprofileNode.rx.url,
+                  setNeedsLayout: self)
+            .disposed(by: disposeBag)
+        
+        viewModel.userName
+            .bind(to: usernameNode.rx.text(self.usernameNodeAttribute),
+                  setNeedsLayout: self)
+            .disposed(by: disposeBag)
+        
+        viewModel.score
+            .bind(to: scoreNode.rx.text(self.scoreNodeAttribute),
+                  setNeedsLayout: self)
+            .disposed(by: disposeBag)
+        
     }
 }
 
