@@ -15,7 +15,8 @@ protocol PathType {
 }
 
 protocol APIProvider {
-    func searchRequest() -> Observable<[UserModel]>
+    func searchRequest(searchString: String) -> Observable<[UserModel]>
+//    func loadMoreRequest(nextLink: String) -> Observable<[UserModel]>
 }
 
 enum Path: PathType{
@@ -29,21 +30,29 @@ enum Path: PathType{
 
 class Api: APIProvider{
     private let client = Client()
+    private let baseURL = "https://api.github.com"
+    private var links = ""
     
-    func searchRequest() -> Observable<[UserModel]> {
-        return client.get(path: Path.searchUser.path(),
-                          params: ["p": "v"])
+    func searchRequest(searchString: String) -> Observable<[UserModel]> {
+        return client.get(url: baseURL + Path.searchUser.path(), params: ["q":searchString])
             .map({ res, data -> [UserModel] in
-                let headers = res.allHeaderFields
-                dump(headers)
-                dump(headers["Link"])
+                self.links = res.allHeaderFields["Link"] as? String ?? ""
+                
+//                dump(res)
+//                dump(data)
+
                 guard let response = try? JSONDecoder().decode(UserListResponse.self, from: data)
                 else {
-                    print("ㅁㄴㅇㄹㅁㄴㅇㄹ")
+                    print("왜 안돼 ㅜㅜㅜㅜ")
                     return []
                 }
-                
+                               
                 return response.userlist
             })
+        
     }
+//    func loadMoreRequest(nextLink: String) -> Observable<[UserModel]> {
+//
+//    }
+    
 }

@@ -12,15 +12,14 @@ import Alamofire
 import RxAlamofire
 
 protocol ClientType {
-    func get(path: String, params: Parameters) -> Observable<(HTTPURLResponse,Data)>
+    func get(url: String, params: Parameters) -> Observable<(HTTPURLResponse,Data)>
 }
 
 class Client: ClientType {
-    private let baseURL = "https://api.github.com/"
-    
-    func get(path: String, params: Parameters) -> Observable<(HTTPURLResponse,Data)> {
+
+    func get(url: String, params: Parameters) -> Observable<(HTTPURLResponse,Data)> {
         return requestData(.get,
-                           baseURL + path,
+                           url,
                            parameters: params,
                            encoding: URLEncoding.queryString,
                            headers: nil)
