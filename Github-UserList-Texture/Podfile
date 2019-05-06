@@ -10,7 +10,7 @@ target 'Github-UserList-Texture' do
 	pod 'RxCocoa'
 	pod 'RxAlamofire'
 	pod 'RxCocoa-Texture'
-
+	pod 'RxOptional'
 
 
   # Pods for Github-UserList-Texture
