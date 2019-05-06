@@ -24,6 +24,10 @@ class UserListViewController: ASViewController<ASTableNode> {
         return bar
     }()
     
+    lazy var loadingIndicator: UIActivityIndicatorView = {
+        return UIActivityIndicatorView(style: .gray)
+    }()
+    
     init() {
         let tableNode = ASTableNode(style: .plain)
         tableNode.automaticallyManagesSubnodes = true
@@ -36,13 +40,13 @@ class UserListViewController: ASViewController<ASTableNode> {
             self.navigationItem.titleView = self.searchBar
         }
         self.node.leadingScreensForBatching = 2.0
-        self.node.allowsSelectionDuringEditing = true
         self.node.delegate = self
         self.node.dataSource = self
-      
-        bindViewModel()
+        self.node.allowsSelection = false
         
+        bindViewModel()
     }
+    
     
     override func viewDidLoad() {
     }
@@ -60,17 +64,36 @@ extension UserListViewController{
         .orEmpty
         .filterEmpty()
         .distinctUntilChanged()
-        .throttle(0.5, scheduler: MainScheduler.instance)
+        .debounce(0.5, scheduler: MainScheduler.instance)
         .bind(to: viewModel.searchString)
         .disposed(by: disposeBag)
         
         viewModel.userList.asObservable()
-            .subscribe(onNext: { data in
-                self.userlist = data
-                self.node.reloadData()
+            .subscribe(onNext: { [weak self] data in
+                guard let strongSelf = self else { return }
+                strongSelf.userlist = data
+                strongSelf.node.reloadData()
             })
             .disposed(by: disposeBag)
         
+    }
+    
+    func loadMoreData(_ context: ASBatchContext?){
+        _ = Api().loadMoreRequest().asObservable()
+        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+        .observeOn(MainScheduler.instance)
+        .retry(3)
+            .subscribe(onNext: { [weak self] data in
+                guard let strongSelf = self else { return }
+                strongSelf.userlist.append(contentsOf: data)
+                strongSelf.node.reloadData()
+                context?.completeBatchFetching(true)
+                }, onError: { error in
+                    print("fdsa\(error)")
+                    context?.completeBatchFetching(true)
+            }, onCompleted: {
+                context?.completeBatchFetching(true)
+            })
     }
 }
 
@@ -92,5 +115,13 @@ extension UserListViewController: ASTableDelegate, ASTableDataSource {
             let cell = UserListCellNode(viewModel: viewModel)
             return cell
         }
+    }
+    
+    func shouldBatchFetch(for tableNode: ASTableNode) -> Bool {
+        return true
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, willBeginBatchFetchWith context: ASBatchContext) {
+        loadMoreData(context)
     }
 }
