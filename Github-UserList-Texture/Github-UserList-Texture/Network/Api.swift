@@ -16,7 +16,7 @@ protocol PathType {
 
 protocol APIProvider {
     func searchRequest(searchString: String) -> Observable<[UserModel]>
-    func loadMoreRequest() -> Observable<[UserModel]>
+//    func loadMoreRequest(nextLink: String) -> Observable<[UserModel]>
 }
 
 enum Path: PathType{
@@ -30,16 +30,17 @@ enum Path: PathType{
 
 class Api: APIProvider{
     private let client = Client()
-    private let baseURL = "http://api.github.com"
-    private var nextLink = ""
+    private let baseURL = "https://api.github.com"
+    private var links = ""
     
     func searchRequest(searchString: String) -> Observable<[UserModel]> {
         return client.get(url: baseURL + Path.searchUser.path(), params: ["q":searchString])
             .map({ res, data -> [UserModel] in
-               
-                self.nextLink = findNextLink(res: res)
-                print("fdsa\(self.nextLink)")
-            
+                self.links = res.allHeaderFields["Link"] as? String ?? ""
+                
+//                dump(res)
+//                dump(data)
+
                 guard let response = try? JSONDecoder().decode(UserListResponse.self, from: data)
                 else {
                     print("왜 안돼 ㅜㅜㅜㅜ")
@@ -50,20 +51,8 @@ class Api: APIProvider{
             })
         
     }
-    
-    func loadMoreRequest() -> Observable<[UserModel]> {
-        return client.get(url: self.nextLink, params: nil)
-            .map({ res, data -> [UserModel] in
-                self.nextLink = findNextLink(res: res)
-                
-                guard let response = try? JSONDecoder().decode(UserListResponse.self, from: data)
-                    else {
-                        print("이건 또 왜 안돼 ㅜㅜㅜㅜ")
-                        return []
-                }
-                
-                return response.userlist
-            })
-    }
+//    func loadMoreRequest(nextLink: String) -> Observable<[UserModel]> {
+//
+//    }
     
 }
