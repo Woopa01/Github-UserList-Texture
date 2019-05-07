@@ -11,6 +11,7 @@ target 'Github-UserList-Texture' do
 	pod 'RxAlamofire'
 	pod 'RxCocoa-Texture'
 	pod 'RxOptional'
+	pod 'SnapKit'
 
 
   # Pods for Github-UserList-Texture
