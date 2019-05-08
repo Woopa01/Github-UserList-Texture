@@ -101,6 +101,7 @@ extension UserListViewController{
                         return IndexPath(row: strongSelf.userlist.count - 1 + offset, section: 0)
                 }
                 
+                strongSelf.userlist.append(contentsOf: data)
                 strongSelf.node.performBatchUpdates({
                     strongSelf.node.insertRows(at: moreDataIndex, with: .none)
                 }, completion: { isFinish in
@@ -110,7 +111,6 @@ extension UserListViewController{
                 
                 context?.completeBatchFetching(true)
                 }, onError: { error in
-                    print("fdsa\(error)")
                     context?.completeBatchFetching(true)
                     self.loadingIndicator.stopAnimating()
             })
