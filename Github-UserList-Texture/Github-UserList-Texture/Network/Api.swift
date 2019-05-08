@@ -31,15 +31,18 @@ enum Path: PathType{
 class Api: APIProvider{
     private let client = Client()
     private let baseURL = "http://api.github.com"
+    private var nextLink = ""
     
     func searchRequest(searchString: String) -> Observable<[UserModel]> {
         return client.get(url: baseURL + Path.searchUser.path(), params: ["q":searchString])
             .map({ res, data -> [UserModel] in
                 
-                UserDefaults.standard.set(findNextLink(res: res), forKey: "nextLink")
+                self.nextLink = findNextLink(res: res)
+                print("fdsa\(self.nextLink)")
                 
                 guard let response = try? JSONDecoder().decode(UserListResponse.self, from: data)
                 else {
+                    print("왜 안돼 ㅜㅜㅜㅜ")
                     return []
                 }
                                
@@ -49,13 +52,13 @@ class Api: APIProvider{
     }
     
     func loadMoreRequest() -> Observable<[UserModel]> {
-        return client.get(url: UserDefaults.standard.value(forKey: "nextLink") as! String, params: nil)
+        return client.get(url: self.nextLink, params: nil)
             .map({ res, data -> [UserModel] in
+                self.nextLink = findNextLink(res: res)
                 
-                UserDefaults.standard.set(findNextLink(res: res), forKey: "nextLink")
-
                 guard let response = try? JSONDecoder().decode(UserListResponse.self, from: data)
                     else {
+                        print("이건 또 왜 안돼 ㅜㅜㅜㅜ")
                         return []
                 }
                 

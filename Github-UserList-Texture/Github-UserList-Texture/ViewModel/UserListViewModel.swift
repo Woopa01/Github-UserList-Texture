@@ -28,6 +28,7 @@ class UserListViewModel {
     
     init() {
         searchString.asObservable()
+        .filterEmpty()
         .distinctUntilChanged()
         .flatMap {
                 self.dependencies.api.searchRequest(searchString: $0)

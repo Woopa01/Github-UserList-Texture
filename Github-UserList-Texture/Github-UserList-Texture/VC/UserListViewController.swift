@@ -7,7 +7,6 @@
 //
 
 import AsyncDisplayKit
-import SnapKit
 import RxSwift
 import RxCocoa
 import RxCocoa_Texture
@@ -43,16 +42,14 @@ class UserListViewController: ASViewController<ASTableNode> {
         self.node.leadingScreensForBatching = 2.0
         self.node.delegate = self
         self.node.dataSource = self
-        
-        self.node.view.addSubview(loadingIndicator)
-        loadingIndicator.snp.makeConstraints { make in
-            make.left.right.equalTo(self.node.view.safeAreaLayoutGuide)
-            make.bottom.equalTo(self.node.view.safeAreaLayoutGuide.snp.bottom)
-        }
+        self.node.allowsSelection = false
         
         bindViewModel()
     }
     
+    
+    override func viewDidLoad() {
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -64,11 +61,12 @@ extension UserListViewController{
         viewModel = UserListViewModel()
         
         searchBar.rx.text
-            .orEmpty
-            .distinctUntilChanged()
-            .debounce(0.5, scheduler: MainScheduler.instance)
-            .bind(to: viewModel.searchString)
-            .disposed(by: disposeBag)
+        .orEmpty
+        .filterEmpty()
+        .distinctUntilChanged()
+        .debounce(0.5, scheduler: MainScheduler.instance)
+        .bind(to: viewModel.searchString)
+        .disposed(by: disposeBag)
         
         viewModel.userList.asObservable()
             .subscribe(onNext: { [weak self] data in
@@ -81,33 +79,20 @@ extension UserListViewController{
     }
     
     func loadMoreData(_ context: ASBatchContext?){
-        DispatchQueue.main.async {
-            self.loadingIndicator.startAnimating()
-        }
-        
         _ = Api().loadMoreRequest().asObservable()
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-            .observeOn(MainScheduler.instance)
-            .retry(3)
+        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+        .observeOn(MainScheduler.instance)
+        .retry(3)
             .subscribe(onNext: { [weak self] data in
                 guard let strongSelf = self else { return }
-                
-                let moreDataIndex = data.enumerated()
-                    .map{ offset, element -> IndexPath in
-                        return IndexPath(row: strongSelf.userlist.count - 1 + offset, section: 0)
-                }
-                
                 strongSelf.userlist.append(contentsOf: data)
-                strongSelf.node.performBatchUpdates({
-                    strongSelf.node.insertRows(at: moreDataIndex, with: .none)
-                }, completion: { isFinish in
-                    context?.completeBatchFetching(isFinish)
-                    strongSelf.loadingIndicator.stopAnimating()
-                })
-                
+                strongSelf.node.reloadData()
+                context?.completeBatchFetching(true)
                 }, onError: { error in
+                    print("fdsa\(error)")
                     context?.completeBatchFetching(true)
-                    self.loadingIndicator.stopAnimating()
+            }, onCompleted: {
+                context?.completeBatchFetching(true)
             })
     }
 }
@@ -133,10 +118,7 @@ extension UserListViewController: ASTableDelegate, ASTableDataSource {
     }
     
     func shouldBatchFetch(for tableNode: ASTableNode) -> Bool {
-        if userlist.isEmpty { return false }
-        else if loadingIndicator.isAnimating { return false }
-        else if UserDefaults.standard.value(forKey: "nextLink") as! String == "" { return false }
-        else { return true }
+        return true
     }
     
     func tableNode(_ tableNode: ASTableNode, willBeginBatchFetchWith context: ASBatchContext) {

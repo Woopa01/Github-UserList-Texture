@@ -35,4 +35,3 @@ func findNextLink(res: HTTPURLResponse) -> String{
     
     return link
 }
-
