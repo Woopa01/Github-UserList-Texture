@@ -7,6 +7,7 @@
 //
 
 import AsyncDisplayKit
+import SnapKit
 import RxSwift
 import RxCocoa
 import RxCocoa_Texture
@@ -44,6 +45,12 @@ class UserListViewController: ASViewController<ASTableNode> {
         self.node.dataSource = self
         self.node.allowsSelection = false
         
+        self.node.view.addSubview(loadingIndicator)
+        loadingIndicator.snp.makeConstraints { make in
+            make.left.right.equalTo(self.node.view.safeAreaLayoutGuide)
+            make.bottom.equalTo(self.node.view.safeAreaLayoutGuide.snp.bottom)
+        }
+        
         bindViewModel()
     }
     
@@ -61,12 +68,11 @@ extension UserListViewController{
         viewModel = UserListViewModel()
         
         searchBar.rx.text
-        .orEmpty
-        .filterEmpty()
-        .distinctUntilChanged()
-        .debounce(0.5, scheduler: MainScheduler.instance)
-        .bind(to: viewModel.searchString)
-        .disposed(by: disposeBag)
+            .orEmpty
+            .distinctUntilChanged()
+            .debounce(0.5, scheduler: MainScheduler.instance)
+            .bind(to: viewModel.searchString)
+            .disposed(by: disposeBag)
         
         viewModel.userList.asObservable()
             .subscribe(onNext: { [weak self] data in
@@ -79,20 +85,34 @@ extension UserListViewController{
     }
     
     func loadMoreData(_ context: ASBatchContext?){
+        DispatchQueue.main.async {
+            self.loadingIndicator.startAnimating()
+        }
+        
         _ = Api().loadMoreRequest().asObservable()
-        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-        .observeOn(MainScheduler.instance)
-        .retry(3)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+            .retry(3)
             .subscribe(onNext: { [weak self] data in
                 guard let strongSelf = self else { return }
-                strongSelf.userlist.append(contentsOf: data)
-                strongSelf.node.reloadData()
+                
+                let moreDataIndex = data.enumerated()
+                    .map{ offset, element -> IndexPath in
+                        return IndexPath(row: strongSelf.userlist.count - 1 + offset, section: 0)
+                }
+                
+                strongSelf.node.performBatchUpdates({
+                    strongSelf.node.insertRows(at: moreDataIndex, with: .none)
+                }, completion: { isFinish in
+                    context?.completeBatchFetching(isFinish)
+                    strongSelf.loadingIndicator.stopAnimating()
+                })
+                
                 context?.completeBatchFetching(true)
                 }, onError: { error in
                     print("fdsa\(error)")
                     context?.completeBatchFetching(true)
-            }, onCompleted: {
-                context?.completeBatchFetching(true)
+                    self.loadingIndicator.stopAnimating()
             })
     }
 }
@@ -118,8 +138,10 @@ extension UserListViewController: ASTableDelegate, ASTableDataSource {
     }
     
     func shouldBatchFetch(for tableNode: ASTableNode) -> Bool {
-        return true
-    }
+        if userlist.isEmpty { return false }
+        else if loadingIndicator.isAnimating { return false }
+        else if UserDefaults.standard.value(forKey: "nextLink") as! String == "" { return false }
+        else { return true }    }
     
     func tableNode(_ tableNode: ASTableNode, willBeginBatchFetchWith context: ASBatchContext) {
         loadMoreData(context)
