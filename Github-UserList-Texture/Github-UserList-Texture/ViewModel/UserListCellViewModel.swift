@@ -22,7 +22,5 @@ class UserListCellViewModel{
         self.userName = Observable.just(userModel.userName)
         
         self.score = Observable.just(String(userModel.score))
-        
-        print("fdsa\(self.userProfileURL)")
     }
 }
