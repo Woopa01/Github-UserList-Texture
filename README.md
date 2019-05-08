@@ -3,6 +3,7 @@
 ### About this Service
 - GitHub Search User Api를 이용하여 특정 사용자 목록을 보여줍니다.
 - MVVM 패턴과 RxSwift를 이용하여 작성하였습니다.
+- Texture 라이브러리를 이용하여 UI를 작성하였습니다.
 
 <img width = 50% src = "Image/ScreenShot.png">
 
