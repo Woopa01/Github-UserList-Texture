@@ -6,7 +6,8 @@
 
 <img width = 50% src = "Image/ScreenShot.png">
 
-- SearchBar에 입력한 내용을 기준으로 사용자를 검색합니다.  
+- SearchBar에 입력한 내용을 기준으로 사용자를 검색합니다.
+- 사용자에 대한 프로필 이미지, 이름, 점수를 표시해줍니다.
 - 검색된 사용자는 Header Field에 내려오는 링크로 단방향 페이징 됩니다.
 
 ### Library
